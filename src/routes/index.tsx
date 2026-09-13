@@ -204,7 +204,7 @@ function SavingsComparison() {
     },
     {
       title: "O Segredo da Interpretação",
-      value: "R$ 10,00",
+      value: "R$ 15,00",
       detail: "Curso com cinco aulas para compreender melhor os enunciados.",
       image: "/images/segredo-interpretacao-plataforma.webp",
       format: "PLATAFORMA COM 5 AULAS",

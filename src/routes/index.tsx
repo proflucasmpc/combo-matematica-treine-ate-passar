@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
 // ============================================
 // CONFIGURAÇÕES EDITÁVEIS
 // ============================================
-const CHECKOUT_URL = "https://pay.hotmart.com/Y107583615W";
+const CHECKOUT_URL = "https://pay.hotmart.com/C107593539W";
 const WHATSAPP_URL = "https://wa.me/5511960189699?text=Ol%C3%A1%2C%20professor%20Lucas.%20Quero%20saber%20mais%20sobre%20o%20Combo%20Treine%20At%C3%A9%20Passar%203%20em%201.";
 
 const TRACKING_PARAMETERS = [

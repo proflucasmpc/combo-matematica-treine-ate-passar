@@ -71,15 +71,35 @@ function useCheckoutUrl() {
 
   return checkoutUrl;
 }
-// Depoimentos reais. Enquanto estiver vazio, a seção pública fica oculta.
-type Testimonial = {
-  name: string;
-  concurso: string;
-  text: string;
-  image?: string;
-  rating?: 1 | 2 | 3 | 4 | 5;
+type VideoTestimonial = {
+  videoId: string;
+  description: string;
 };
-const TESTIMONIALS: Testimonial[] = [];
+
+const METHOD_APPROVED_VIDEO = {
+  videoId: "f-8KhHm2xaE",
+  title: "Método Aprovado: comentários reais de alunos e seguidores",
+  description:
+    "Veja uma seleção de comentários publicados nas aulas de Matemática e resoluções de questões do Prof. Lucas MPC.",
+};
+
+const TESTIMONIALS: VideoTestimonial[] = [
+  { videoId: "AFhS3c8i8rI", description: "Uma experiência real com as aulas, questões e estratégias do Método MPC." },
+  { videoId: "BR33nQ2Qvdw", description: "Relato sobre a preparação e o aprendizado com explicações práticas." },
+  { videoId: "8IwYn-aOU2w", description: "Uma nova forma de compreender e enfrentar as questões de Matemática." },
+  { videoId: "cGH7C_BWPes", description: "Experiência de quem acompanhou as aulas e resoluções do professor Lucas." },
+  { videoId: "76Fcz0j1-oo", description: "Relato real sobre o uso dos conteúdos na preparação para concursos." },
+  { videoId: "FC9HCm52l4o", description: "Quando explicações diretas ajudam a tornar a Matemática mais acessível." },
+  { videoId: "fJQncmovEwc", description: "Uma experiência com aulas práticas, questões e estratégias de resolução." },
+  { videoId: "G_J4G0ovBwA", description: "Relato de quem estudou Matemática por meio de questões comentadas." },
+  { videoId: "pUJNXBnA4rc", description: "Experiência real com a didática e o Método MPC." },
+  { videoId: "-Ue-WHThdqM", description: "Uma preparação baseada em prática, explicações e resolução de questões." },
+  { videoId: "CkFhWpy4ZEY", description: "Relato sobre o aprendizado e a evolução durante a preparação." },
+  { videoId: "BtUrTIxuNtI", description: "Experiência de quem encontrou uma maneira mais prática de estudar Matemática." },
+  { videoId: "zGbXMEXi1Sw", description: "Relato breve sobre as aulas e estratégias do Método MPC." },
+  { videoId: "ZHdJXD-peTw", description: "Uma experiência real com a preparação prática para concursos." },
+  { videoId: "UTjIZTanhWs", description: "Relato sobre a didática, os conteúdos e a resolução de questões." },
+];
 // ============================================
 
 const NAV_LINKS = [
@@ -1037,52 +1057,112 @@ function PerceivedValue() {
 }
 
 /* -------------------- SOCIAL PROOF -------------------- */
-function SocialProof() {
-  if (TESTIMONIALS.length === 0) return null;
+function TestimonialVideo({
+  videoId,
+  title,
+}: {
+  videoId: string;
+  title: string;
+}) {
+  const [playing, setPlaying] = useState(false);
+
   return (
-    <section className="border-t border-border/40 py-16 sm:py-24">
+    <div className="overflow-hidden rounded-xl border border-primary/20 bg-black">
+      {playing ? (
+        <iframe
+          className="block aspect-video w-full"
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          className="group relative block aspect-video w-full overflow-hidden bg-black"
+          aria-label={`Reproduzir ${title}`}
+        >
+          <img
+            src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover transition duration-300 group-hover:scale-105 group-hover:opacity-80"
+          />
+          <span className="absolute inset-0 bg-black/20" />
+          <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary text-2xl text-black shadow-xl transition group-hover:scale-110">
+            ▶
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
+
+function SocialProof() {
+  return (
+    <section id="depoimentos" className="border-t border-border/40 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] text-primary">DEPOIMENTOS</p>
+          <p className="text-xs font-semibold tracking-[0.2em] text-primary">
+            DEPOIMENTOS REAIS
+          </p>
           <h2 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl">
-            Resultados começam quando o aluno{" "}
-            <span className="text-gradient-gold">deixa de apenas assistir e começa a praticar</span>
+            Veja quem já aprendeu Matemática com o{" "}
+            <span className="text-gradient-gold">Método MPC</span>
           </h2>
+          <p className="mt-4 text-muted-foreground">
+            Experiências reais de alunos que utilizaram as aulas, questões, macetes e estratégias em sua preparação.
+          </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => (
-            <div key={i} className="card-surface p-6">
-              {t.rating ? (
-                <div className="flex gap-0.5 text-primary">
-                  {Array.from({ length: 5 }).map((_, k) => (
-                    <span key={k} className={k < t.rating! ? "" : "opacity-25"}>
-                      ★
-                    </span>
+        <div className="card-surface mx-auto mt-12 max-w-4xl overflow-hidden border-primary/30 p-4 sm:p-6">
+          <div className="mb-5 text-center">
+            <p className="text-xs font-semibold tracking-[0.18em] text-primary">
+              MÉTODO APROVADO
+            </p>
+            <h3 className="mt-2 font-display text-xl font-bold sm:text-2xl">
+              {METHOD_APPROVED_VIDEO.title}
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {METHOD_APPROVED_VIDEO.description}
+            </p>
+          </div>
+          <TestimonialVideo
+            videoId={METHOD_APPROVED_VIDEO.videoId}
+            title={METHOD_APPROVED_VIDEO.title}
+          />
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {TESTIMONIALS.map((testimonial, index) => (
+            <article key={testimonial.videoId} className="card-surface overflow-hidden p-4">
+              <TestimonialVideo
+                videoId={testimonial.videoId}
+                title={`Depoimento real ${index + 1}`}
+              />
+              <div className="px-1 pb-2 pt-5">
+                <div className="flex gap-0.5 text-primary" aria-label="5 estrelas">
+                  {Array.from({ length: 5 }).map((_, star) => (
+                    <span key={star}>★</span>
                   ))}
                 </div>
-              ) : null}
-              <p className="mt-3 text-sm text-foreground/90">"{t.text}"</p>
-              <div className="mt-5 flex items-center gap-3">
-                {t.image ? (
-                  <img
-                    src={t.image}
-                    alt={t.name}
-                    className="h-9 w-9 rounded-full object-cover"
-                  />
-                ) : (
-                  <div className="grid h-9 w-9 place-items-center rounded-full bg-primary/20 text-primary">
-                    {t.name[0]}
-                  </div>
-                )}
-                <div>
-                  <p className="text-sm font-semibold">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.concurso}</p>
-                </div>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/90">
+                  {testimonial.description}
+                </p>
+                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+                  Aluno da Academia
+                </p>
               </div>
-            </div>
+            </article>
           ))}
         </div>
+
+        <p className="mx-auto mt-8 max-w-4xl text-center text-xs leading-relaxed text-muted-foreground">
+          Os depoimentos representam experiências individuais. Os resultados dependem da dedicação,
+          da rotina de estudos e da aplicação do conteúdo por cada aluno.
+        </p>
       </div>
     </section>
   );

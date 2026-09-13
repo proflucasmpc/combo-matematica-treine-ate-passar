@@ -1,0 +1,150 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Inter", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Base */
+  --background: oklch(0.15 0.04 260); /* #010817-ish deep navy */
+  --foreground: oklch(0.985 0 0);
+  --surface: oklch(0.20 0.04 260);
+  --surface-2: oklch(0.24 0.045 260);
+
+  --card: oklch(0.20 0.04 260);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.18 0.04 260);
+  --popover-foreground: oklch(0.985 0 0);
+
+  /* Gold / amarelo */
+  --primary: oklch(0.84 0.17 88);
+  --primary-foreground: oklch(0.16 0.03 260);
+  --primary-glow: oklch(0.92 0.14 96);
+
+  --secondary: oklch(0.26 0.04 260);
+  --secondary-foreground: oklch(0.985 0 0);
+
+  --muted: oklch(0.26 0.03 260);
+  --muted-foreground: oklch(0.78 0.02 260);
+
+  --accent: oklch(0.84 0.17 88);
+  --accent-foreground: oklch(0.16 0.03 260);
+
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --success: oklch(0.75 0.17 155);
+
+  --border: oklch(0.32 0.03 260 / 60%);
+  --input: oklch(0.30 0.03 260);
+  --ring: oklch(0.84 0.17 88);
+}
+
+html,
+body {
+  background-color: #010817;
+}
+
+body {
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+}
+
+@utility bg-app {
+  background-color: #010817;
+  background-image:
+    radial-gradient(1000px 500px at 85% -10%, oklch(0.35 0.12 260 / 0.35), transparent 60%),
+    radial-gradient(700px 400px at -10% 20%, oklch(0.30 0.10 265 / 0.30), transparent 60%);
+}
+
+@utility text-gradient-gold {
+  background: linear-gradient(135deg, oklch(0.92 0.14 96), oklch(0.78 0.17 82));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility btn-gold {
+  background: linear-gradient(135deg, oklch(0.9 0.16 92), oklch(0.78 0.17 82));
+  color: #0b1020;
+  font-weight: 700;
+  transition: transform 150ms ease, box-shadow 200ms ease, filter 200ms ease;
+  box-shadow:
+    0 10px 30px -8px oklch(0.78 0.17 82 / 0.55),
+    inset 0 1px 0 oklch(1 0 0 / 0.35);
+
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow:
+      0 16px 40px -10px oklch(0.78 0.17 82 / 0.7),
+      inset 0 1px 0 oklch(1 0 0 / 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+    filter: brightness(0.98);
+  }
+}
+
+@utility card-surface {
+  background: linear-gradient(180deg, oklch(0.22 0.04 260 / 0.9), oklch(0.18 0.04 260 / 0.9));
+  border: 1px solid oklch(0.4 0.05 260 / 0.35);
+  border-radius: 1rem;
+  box-shadow:
+    0 1px 0 oklch(1 0 0 / 0.04) inset,
+    0 20px 40px -25px oklch(0 0 0 / 0.6);
+}
+
+@utility ring-gold-soft {
+  box-shadow: 0 0 0 1px oklch(0.84 0.17 88 / 0.4), 0 20px 60px -25px oklch(0.84 0.17 88 / 0.4);
+}

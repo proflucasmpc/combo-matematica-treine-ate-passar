@@ -69,7 +69,6 @@ function loadMetaPixel() {
 
   const metaWindow = window as MetaPixelWindow;
 
-  // Impede que o Pixel seja inicializado mais de uma vez.
   if (metaWindow.fbq) {
     return;
   }
@@ -223,45 +222,33 @@ function VideoPlayOverlayEnhancement() {
       return;
     }
 
-    const video = document.querySelector(
-      'video[poster="/images/capa-vsl-combo.jpg"]',
-    ) as HTMLVideoElement | null;
-
-    if (!video || video.dataset.centralPlayReady === "true") {
-      return;
-    }
-
-    const wrapper = video.parentElement as HTMLElement | null;
-
-    if (!wrapper) {
-      return;
-    }
-
-    video.dataset.centralPlayReady = "true";
-    wrapper.style.position = "relative";
+    let currentVideo: HTMLVideoElement | null = null;
+    let currentWrapper: HTMLElement | null = null;
 
     const button = document.createElement("button");
     button.type = "button";
     button.setAttribute("aria-label", "Reproduzir vídeo");
+    button.setAttribute("data-vsl-central-play", "true");
     button.style.position = "absolute";
     button.style.left = "50%";
     button.style.top = "50%";
     button.style.transform = "translate(-50%, -50%)";
-    button.style.width = "86px";
-    button.style.height = "86px";
+    button.style.width = "92px";
+    button.style.height = "92px";
     button.style.borderRadius = "9999px";
-    button.style.border = "2px solid rgba(255,255,255,0.28)";
+    button.style.border = "3px solid rgba(255,255,255,0.55)";
     button.style.background = "#f6c423";
     button.style.color = "#020817";
     button.style.display = "flex";
     button.style.alignItems = "center";
     button.style.justifyContent = "center";
     button.style.cursor = "pointer";
-    button.style.zIndex = "8";
-    button.style.boxShadow = "0 14px 38px rgba(0,0,0,0.42)";
-    button.style.transition = "transform 160ms ease, filter 160ms ease, opacity 160ms ease";
+    button.style.zIndex = "999";
+    button.style.boxShadow = "0 16px 45px rgba(0,0,0,0.5)";
+    button.style.transition =
+      "transform 160ms ease, filter 160ms ease, opacity 160ms ease";
     button.innerHTML =
-      '<svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+      '<svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
 
     const showButton = () => {
       button.style.display = "flex";
@@ -272,12 +259,14 @@ function VideoPlayOverlayEnhancement() {
     };
 
     const handleClick = () => {
-      void video.play();
+      if (currentVideo) {
+        void currentVideo.play();
+      }
     };
 
     const handleEnter = () => {
-      button.style.transform = "translate(-50%, -50%) scale(1.06)";
-      button.style.filter = "brightness(1.07)";
+      button.style.transform = "translate(-50%, -50%) scale(1.08)";
+      button.style.filter = "brightness(1.08)";
     };
 
     const handleLeave = () => {
@@ -288,25 +277,77 @@ function VideoPlayOverlayEnhancement() {
     button.addEventListener("click", handleClick);
     button.addEventListener("mouseenter", handleEnter);
     button.addEventListener("mouseleave", handleLeave);
-    video.addEventListener("play", hideButton);
-    video.addEventListener("pause", showButton);
-    video.addEventListener("ended", showButton);
 
-    wrapper.appendChild(button);
+    const detachFromVideo = () => {
+      if (!currentVideo) {
+        return;
+      }
 
-    if (!video.paused) {
-      hideButton();
-    }
+      currentVideo.removeEventListener("play", hideButton);
+      currentVideo.removeEventListener("pause", showButton);
+      currentVideo.removeEventListener("ended", showButton);
+      currentVideo = null;
+      currentWrapper = null;
+    };
+
+    const ensureOverlay = () => {
+      const video = Array.from(document.querySelectorAll("video")).find((item) => {
+        const source = item.querySelector("source");
+        return (
+          item.getAttribute("poster")?.includes("capa-vsl-combo") ||
+          source?.getAttribute("src")?.includes("combo-treine-ate-passar")
+        );
+      }) as HTMLVideoElement | undefined;
+
+      if (!video) {
+        return;
+      }
+
+      const wrapper = video.parentElement as HTMLElement | null;
+
+      if (!wrapper) {
+        return;
+      }
+
+      if (currentVideo !== video) {
+        detachFromVideo();
+        currentVideo = video;
+        currentWrapper = wrapper;
+        currentVideo.addEventListener("play", hideButton);
+        currentVideo.addEventListener("pause", showButton);
+        currentVideo.addEventListener("ended", showButton);
+      }
+
+      currentWrapper.style.position = "relative";
+
+      if (!button.isConnected || button.parentElement !== currentWrapper) {
+        currentWrapper.appendChild(button);
+      }
+
+      if (currentVideo.paused || currentVideo.ended) {
+        showButton();
+      } else {
+        hideButton();
+      }
+    };
+
+    ensureOverlay();
+
+    const intervalId = window.setInterval(ensureOverlay, 400);
+    const mutationObserver = new MutationObserver(ensureOverlay);
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
 
     return () => {
+      window.clearInterval(intervalId);
+      mutationObserver.disconnect();
+      detachFromVideo();
       button.removeEventListener("click", handleClick);
       button.removeEventListener("mouseenter", handleEnter);
       button.removeEventListener("mouseleave", handleLeave);
-      video.removeEventListener("play", hideButton);
-      video.removeEventListener("pause", showButton);
-      video.removeEventListener("ended", showButton);
       button.remove();
-      delete video.dataset.centralPlayReady;
     };
   }, []);
 
@@ -339,7 +380,6 @@ function CookieConsentBanner() {
     setConsent("rejected");
   }
 
-  // Evita diferenças entre o HTML do servidor e o navegador.
   if (!hasCheckedConsent || consent !== null) {
     return null;
   }

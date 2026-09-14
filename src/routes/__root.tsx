@@ -213,6 +213,106 @@ function ProfessorPhotoEnhancement() {
   return null;
 }
 
+function VideoPlayOverlayEnhancement() {
+  useEffect(() => {
+    if (
+      typeof window === "undefined" ||
+      typeof document === "undefined" ||
+      window.location.pathname !== "/"
+    ) {
+      return;
+    }
+
+    const video = document.querySelector(
+      'video[poster="/images/capa-vsl-combo.jpg"]',
+    ) as HTMLVideoElement | null;
+
+    if (!video || video.dataset.centralPlayReady === "true") {
+      return;
+    }
+
+    const wrapper = video.parentElement as HTMLElement | null;
+
+    if (!wrapper) {
+      return;
+    }
+
+    video.dataset.centralPlayReady = "true";
+    wrapper.style.position = "relative";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute("aria-label", "Reproduzir vídeo");
+    button.style.position = "absolute";
+    button.style.left = "50%";
+    button.style.top = "50%";
+    button.style.transform = "translate(-50%, -50%)";
+    button.style.width = "86px";
+    button.style.height = "86px";
+    button.style.borderRadius = "9999px";
+    button.style.border = "2px solid rgba(255,255,255,0.28)";
+    button.style.background = "#f6c423";
+    button.style.color = "#020817";
+    button.style.display = "flex";
+    button.style.alignItems = "center";
+    button.style.justifyContent = "center";
+    button.style.cursor = "pointer";
+    button.style.zIndex = "8";
+    button.style.boxShadow = "0 14px 38px rgba(0,0,0,0.42)";
+    button.style.transition = "transform 160ms ease, filter 160ms ease, opacity 160ms ease";
+    button.innerHTML =
+      '<svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+
+    const showButton = () => {
+      button.style.display = "flex";
+    };
+
+    const hideButton = () => {
+      button.style.display = "none";
+    };
+
+    const handleClick = () => {
+      void video.play();
+    };
+
+    const handleEnter = () => {
+      button.style.transform = "translate(-50%, -50%) scale(1.06)";
+      button.style.filter = "brightness(1.07)";
+    };
+
+    const handleLeave = () => {
+      button.style.transform = "translate(-50%, -50%) scale(1)";
+      button.style.filter = "none";
+    };
+
+    button.addEventListener("click", handleClick);
+    button.addEventListener("mouseenter", handleEnter);
+    button.addEventListener("mouseleave", handleLeave);
+    video.addEventListener("play", hideButton);
+    video.addEventListener("pause", showButton);
+    video.addEventListener("ended", showButton);
+
+    wrapper.appendChild(button);
+
+    if (!video.paused) {
+      hideButton();
+    }
+
+    return () => {
+      button.removeEventListener("click", handleClick);
+      button.removeEventListener("mouseenter", handleEnter);
+      button.removeEventListener("mouseleave", handleLeave);
+      video.removeEventListener("play", hideButton);
+      video.removeEventListener("pause", showButton);
+      video.removeEventListener("ended", showButton);
+      button.remove();
+      delete video.dataset.centralPlayReady;
+    };
+  }, []);
+
+  return null;
+}
+
 function CookieConsentBanner() {
   const [consent, setConsent] = useState<CookieConsent>(null);
   const [hasCheckedConsent, setHasCheckedConsent] = useState(false);
@@ -460,6 +560,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <Outlet />
       <ProfessorPhotoEnhancement />
+      <VideoPlayOverlayEnhancement />
       <CookieConsentBanner />
     </QueryClientProvider>
   );

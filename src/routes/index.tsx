@@ -1172,13 +1172,13 @@ function AboutTeacher() {
   return (
     <section className="border-t border-border/40 py-16 sm:py-24">
       <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-8 px-4 md:grid-cols-[auto_1fr]">
-        <div className="mx-auto flex h-40 w-40 shrink-0 items-center justify-center rounded-3xl border border-primary/30 bg-surface md:mx-0">
-          <div className="grid h-32 w-32 place-items-center rounded-2xl btn-gold">
-            <div className="text-center leading-tight">
-              <div className="font-display text-3xl font-bold">MPC</div>
-              <div className="text-[10px] tracking-widest">MATEMÁTICA</div>
-            </div>
-          </div>
+        <div className="mx-auto h-48 w-48 shrink-0 overflow-hidden rounded-3xl border border-primary/30 bg-surface shadow-2xl md:mx-0">
+          <img
+            src="/images/prof-lucas-mpc.webp"
+            alt="Prof. Lucas MPC, professor de Matemática para concursos"
+            className="h-full w-full object-cover object-top"
+            loading="lazy"
+          />
         </div>
         <div>
           <p className="text-xs font-semibold tracking-[0.2em] text-primary">

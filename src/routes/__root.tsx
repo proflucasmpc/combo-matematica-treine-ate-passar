@@ -15,6 +15,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 const META_PIXEL_ID = "25752058891159282";
 const META_PIXEL_SCRIPT_ID = "meta-pixel-script";
 const COOKIE_CONSENT_STORAGE_KEY = "cookie-consent";
+const PROFESSOR_PHOTO_SOURCE_URL =
+  "https://raw.githubusercontent.com/proflucasmpc/turma-coletiva-academia-matematica/main/index.html";
 
 type CookieConsent = "accepted" | "rejected" | null;
 
@@ -109,6 +111,106 @@ function loadMetaPixel() {
 
   fbq("init", META_PIXEL_ID);
   fbq("track", "PageView");
+}
+
+function ProfessorPhotoEnhancement() {
+  useEffect(() => {
+    if (
+      typeof window === "undefined" ||
+      typeof document === "undefined" ||
+      window.location.pathname !== "/"
+    ) {
+      return;
+    }
+
+    let cancelled = false;
+    let observer: IntersectionObserver | null = null;
+
+    const aboutSection = Array.from(document.querySelectorAll("section")).find(
+      (section) =>
+        section.textContent?.includes("QUEM PREPAROU ESTE MATERIAL") &&
+        section.textContent?.includes("Prof. Lucas MPC"),
+    );
+
+    if (!aboutSection) {
+      return;
+    }
+
+    async function loadProfessorPhoto() {
+      try {
+        const response = await fetch(PROFESSOR_PHOTO_SOURCE_URL, {
+          cache: "force-cache",
+        });
+
+        if (!response.ok || cancelled) {
+          return;
+        }
+
+        const html = await response.text();
+        const match = html.match(
+          /<div class="teacher-photo">[\s\S]*?<img src="(data:image\/webp;base64,[^"]+)"/,
+        );
+
+        if (!match?.[1] || cancelled) {
+          return;
+        }
+
+        const grid = aboutSection.querySelector(".grid");
+        const photoFrame = grid?.firstElementChild as HTMLElement | null;
+        const photoInner = photoFrame?.firstElementChild as HTMLElement | null;
+
+        if (!photoFrame || !photoInner) {
+          return;
+        }
+
+        const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+        photoFrame.style.width = isMobile ? "190px" : "240px";
+        photoFrame.style.height = isMobile ? "238px" : "300px";
+        photoFrame.style.padding = "6px";
+        photoFrame.style.overflow = "hidden";
+        photoFrame.style.borderRadius = "26px";
+        photoFrame.style.background = "#061426";
+        photoFrame.style.boxShadow = "0 18px 50px rgba(0, 0, 0, 0.28)";
+
+        photoInner.style.width = "100%";
+        photoInner.style.height = "100%";
+        photoInner.style.borderRadius = "20px";
+        photoInner.style.backgroundImage = `url("${match[1]}")`;
+        photoInner.style.backgroundSize = "cover";
+        photoInner.style.backgroundPosition = "center top";
+        photoInner.style.backgroundRepeat = "no-repeat";
+        photoInner.replaceChildren();
+        photoInner.setAttribute("role", "img");
+        photoInner.setAttribute("aria-label", "Prof. Lucas MPC");
+      } catch (error) {
+        console.error("Não foi possível carregar a foto do Prof. Lucas.", error);
+      }
+    }
+
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer?.disconnect();
+            void loadProfessorPhoto();
+          }
+        },
+        { rootMargin: "700px 0px" },
+      );
+
+      observer.observe(aboutSection);
+    } else {
+      void loadProfessorPhoto();
+    }
+
+    return () => {
+      cancelled = true;
+      observer?.disconnect();
+    };
+  }, []);
+
+  return null;
 }
 
 function CookieConsentBanner() {
@@ -357,6 +459,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <ProfessorPhotoEnhancement />
       <CookieConsentBanner />
     </QueryClientProvider>
   );

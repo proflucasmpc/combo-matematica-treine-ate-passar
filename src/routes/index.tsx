@@ -173,7 +173,7 @@ function VideoSalesLetter() {
             href={checkoutUrl}
             className="cta-primary inline-flex items-center justify-center gap-2 px-7 py-4 text-base"
           >
-            QUERO O COMBO 3 EM 1
+            QUERO OS 3 POR R$ 17
             <ArrowRight className="h-5 w-5" />
           </a>
           <p className="mt-3 text-xs text-muted-foreground">
@@ -190,21 +190,21 @@ function SavingsComparison() {
   const products = [
     {
       title: "80 Simulados de Matemática",
-      value: "R$ 15,00",
+      value: "R$ 20,00",
       detail: "Provas completas com gabarito para testar seu desempenho.",
       image: "/images/80-simulados-pdf.webp",
       format: "MATERIAL DIGITAL EM PDF",
     },
     {
       title: "2.000 Questões por Assunto",
-      value: "R$ 15,00",
+      value: "R$ 20,00",
       detail: "Prática organizada para fortalecer os conteúdos mais cobrados.",
       image: "/images/2000-questoes-pdf.webp",
       format: "MATERIAL DIGITAL EM PDF",
     },
     {
       title: "O Segredo da Interpretação",
-      value: "R$ 15,00",
+      value: "R$ 20,00",
       detail: "Curso com cinco aulas para compreender melhor os enunciados.",
       image: "/images/segredo-interpretacao-plataforma.webp",
       format: "PLATAFORMA COM 5 AULAS",
@@ -258,7 +258,7 @@ function SavingsComparison() {
         <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
           <div className="card-surface p-6 sm:p-8">
             <p className="text-xs font-semibold tracking-widest text-muted-foreground">
-              VALOR INDIVIDUAL DE CADA TREINAMENTO: R$ 15
+              VALOR INDIVIDUAL DE CADA TREINAMENTO: R$ 20
             </p>
             <div className="mt-5 space-y-4">
               {products.map((product) => (
@@ -283,7 +283,7 @@ function SavingsComparison() {
             <div className="mt-6 flex items-end justify-between border-t border-border pt-5">
               <span className="text-sm text-muted-foreground">Total individual</span>
               <span className="font-display text-3xl font-bold text-foreground line-through decoration-destructive">
-                R$ 45,00
+                R$ 60,00
               </span>
             </div>
           </div>
@@ -295,7 +295,7 @@ function SavingsComparison() {
           <div className="card-surface relative overflow-hidden border-primary/40 p-6 ring-gold-soft sm:p-8">
             <div className="absolute -right-14 -top-14 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
             <span className="relative inline-flex rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
-              ECONOMIZE R$ 35,00
+              ECONOMIZE R$ 43,00
             </span>
             <p className="relative mt-5 text-xs font-semibold tracking-widest text-primary">
               COMBO TREINE ATÉ PASSAR — 3 EM 1
@@ -305,12 +305,12 @@ function SavingsComparison() {
             </h3>
             <div className="relative mt-4 flex items-end gap-3">
               <span className="font-display text-5xl font-bold text-gradient-gold sm:text-6xl">
-                R$ 10
+                R$ 17
               </span>
               <span className="pb-2 text-sm text-muted-foreground">pagamento único</span>
             </div>
             <p className="relative mt-3 text-sm font-semibold text-primary">
-              Aproximadamente 78% de economia.
+              Aproximadamente 72% de economia — menos de R$ 5,70 por produto.
             </p>
 
             <ul className="relative mt-6 space-y-3 text-sm text-foreground/90">
@@ -341,7 +341,7 @@ function SavingsComparison() {
 
         <div className="mx-auto mt-8 max-w-4xl rounded-2xl border border-primary/25 bg-primary/5 p-5 text-center">
           <p className="font-display text-lg font-semibold text-foreground sm:text-xl">
-            Você leva os três por menos do que pagaria em apenas um — e economiza R$ 35.
+            Você leva os três por menos do que pagaria em apenas um — e economiza R$ 43.
           </p>
         </div>
       </div>
@@ -393,7 +393,7 @@ function Header() {
           href={checkoutUrl}
           className="btn-gold hidden rounded-lg px-4 py-2.5 text-sm md:inline-flex"
         >
-          QUERO O COMBO 3 EM 1
+          QUERO OS 3 POR R$ 17
         </a>
 
         <button
@@ -422,7 +422,7 @@ function Header() {
               href={checkoutUrl}
               className="btn-gold mt-2 rounded-lg px-4 py-3 text-center text-sm"
             >
-              QUERO O COMBO 3 EM 1
+              QUERO OS 3 POR R$ 17
             </a>
           </div>
         </div>
@@ -479,9 +479,9 @@ function Hero() {
 
           <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-primary/20 bg-surface/60 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs text-muted-foreground line-through">Valor total dos três: R$ 45,00</p>
+              <p className="text-xs text-muted-foreground line-through">Valor total dos três: R$ 60,00</p>
               <p className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-                por apenas <span className="text-gradient-gold">R$ 10,00</span>
+                por apenas <span className="text-gradient-gold">R$ 17,00</span>
               </p>
               <p className="mt-1 text-xs text-muted-foreground">Pagamento único. Sem mensalidade.</p>
             </div>
@@ -489,7 +489,7 @@ function Hero() {
               href={checkoutUrl}
               className="btn-gold shrink-0 rounded-xl px-6 py-4 text-center text-sm sm:text-base"
             >
-              QUERO O COMBO 3 EM 1
+              QUERO OS 3 POR R$ 17
             </a>
           </div>
 
@@ -765,7 +765,7 @@ function WhatYouGet() {
           <p className="text-xs font-semibold tracking-[0.2em] text-primary">O QUE VOCÊ RECEBE</p>
           <h2 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl">
             Veja tudo o que você receberá por{" "}
-            <span className="text-gradient-gold">apenas R$ 10,00</span>
+            <span className="text-gradient-gold">apenas R$ 17,00</span>
           </h2>
         </div>
 
@@ -783,7 +783,7 @@ function WhatYouGet() {
 
         <div className="mt-10 text-center">
           <a href={checkoutUrl} className="btn-gold inline-flex rounded-xl px-7 py-4 text-sm">
-            QUERO O COMBO 3 EM 1
+            QUERO OS 3 POR R$ 17
           </a>
         </div>
       </div>
@@ -1032,13 +1032,13 @@ function PerceivedValue() {
           <div className="card-surface p-6 text-center ring-gold-soft sm:p-8">
             <p className="text-sm text-muted-foreground">Separadamente</p>
             <p className="mt-1 font-display text-2xl font-bold text-foreground line-through decoration-destructive">
-              R$ 45,00
+              R$ 60,00
             </p>
             <p className="mt-5 text-sm text-muted-foreground">No combo completo</p>
             <p className="mt-1 font-display text-5xl font-bold text-gradient-gold">
-              R$ 10,00
+              R$ 17,00
             </p>
-            <p className="mt-2 text-sm font-semibold text-primary">Você economiza R$ 35,00 — aproximadamente 78%</p>
+            <p className="mt-2 text-sm font-semibold text-primary">Você economiza R$ 43,00 — aproximadamente 72%</p>
             <a
               href={checkoutUrl}
               className="btn-gold mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 text-sm"
@@ -1250,7 +1250,7 @@ const FAQS = [
     q: "Como receberei o combo?",
     a: "Após a compra, você receberá no e-mail informado as orientações para acessar os três recursos do combo.",
   },
-  { q: "O pagamento é mensal?", a: "Não. O valor de R$ 10,00 é pago uma única vez." },
+  { q: "O pagamento é mensal?", a: "Não. O valor de R$ 17,00 é pago uma única vez." },
   {
     q: "Por quanto tempo terei acesso?",
     a: "O acesso ao combo é permanente, conforme as condições apresentadas nesta oferta e no checkout.",
@@ -1360,10 +1360,10 @@ function FinalCTA() {
           </ul>
 
           <div className="mt-8">
-            <p className="text-sm text-muted-foreground line-through decoration-destructive">Separadamente: R$ 45,00</p>
+            <p className="text-sm text-muted-foreground line-through decoration-destructive">Separadamente: R$ 60,00</p>
             <p className="mt-2 text-xs text-muted-foreground">OS TRÊS POR APENAS</p>
             <p className="font-display text-5xl font-bold text-gradient-gold sm:text-6xl">
-              R$ 10,00
+              R$ 17,00
             </p>
           </div>
 
@@ -1373,7 +1373,7 @@ function FinalCTA() {
             href={checkoutUrl}
             className="btn-gold mt-8 inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-base"
           >
-            SIM, QUERO O COMBO 3 EM 1 <ArrowRight className="h-5 w-5" />
+            SIM, QUERO OS 3 POR R$ 17 <ArrowRight className="h-5 w-5" />
           </a>
           <p className="mt-4 text-xs text-muted-foreground">
             Compra segura • Acesso imediato • Garantia de 7 dias
@@ -1450,7 +1450,7 @@ function MobileStickyBar() {
       <div className="flex items-center gap-3">
         <div className="min-w-0">
           <p className="truncate text-[11px] text-muted-foreground">COMBO 3 EM 1</p>
-          <p className="text-sm font-bold text-gradient-gold">R$ 10,00</p>
+          <p className="text-sm font-bold text-gradient-gold">R$ 17,00</p>
         </div>
         <a
           href={checkoutUrl}

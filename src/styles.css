@@ -148,3 +148,8 @@ html {
 @utility ring-gold-soft {
   box-shadow: 0 0 0 1px oklch(0.84 0.17 88 / 0.4), 0 20px 60px -25px oklch(0.84 0.17 88 / 0.4);
 }
+
+/* VSL removida da página de vendas */
+section:has(video source[src*="combo-treine-ate-passar-sem-musica.mp4"]) {
+  display: none;
+}

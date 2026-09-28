@@ -531,7 +531,7 @@ export const Route =
         {
           name: "description",
           content:
-            "Aprenda a interpretar, pratique com 2.000 questões e teste-se em 80 simulados de Matemática para concursos. Combo digital por apenas R$ 10,00.",
+            "Aprenda a interpretar, pratique com 2.000 questões e teste-se em 80 simulados de Matemática para concursos. Combo digital por apenas R$ 17,00.",
         },
         { name: "author", content: "Prof. Lucas MPC" },
         {
@@ -542,7 +542,7 @@ export const Route =
         {
           property: "og:description",
           content:
-            "Aprenda a interpretar, pratique com 2.000 questões e teste-se em 80 simulados de Matemática para concursos. Combo digital por apenas R$ 10,00.",
+            "Aprenda a interpretar, pratique com 2.000 questões e teste-se em 80 simulados de Matemática para concursos. Combo digital por apenas R$ 17,00.",
         },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
@@ -554,7 +554,7 @@ export const Route =
         {
           name: "twitter:description",
           content:
-            "Aprenda a interpretar, pratique com 2.000 questões e teste-se em 80 simulados de Matemática para concursos. Combo digital por apenas R$ 10,00.",
+            "Aprenda a interpretar, pratique com 2.000 questões e teste-se em 80 simulados de Matemática para concursos. Combo digital por apenas R$ 17,00.",
         },
       ],
       links: [
